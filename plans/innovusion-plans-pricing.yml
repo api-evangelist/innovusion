@@ -1,0 +1,23 @@
+generated: '2026-08-23'
+method: searched
+source: https://seyond.com/downloads/
+plan_count: 0
+note: >-
+  Seyond publishes no price list, no plans page and no self-serve purchase path. Pricing is a
+  quote-only, sales-gated flow: a "Request Pricing" modal on seyond.com collects name, email, sensor
+  model (Falcon K / Robin W / Robin E1X / Hummingbird D1), quantity and region (APAC / AMER / EMEIA)
+  behind a CAPTCHA, and a Seyond team member follows up. There is a parallel "Become a SeyondPlus
+  Distributor" form for channel partners. This is a hardware-and-deployment business, not a metered API,
+  so plan_count: 0 is the true state rather than a gap in this pass — recorded so the absence is data.
+plans: []
+purchase_paths:
+- name: Request Pricing
+  type: quote-request-form
+  url: https://seyond.com/downloads/
+  fields: [name, email, sensor, quantity, region]
+  captcha: true
+- name: Become a SeyondPlus Distributor
+  type: channel-partner-form
+  url: https://seyond.com/channel-partners/
+  fields: [first name, last name, email, phone, title, company name, industry, message]
+  captcha: true

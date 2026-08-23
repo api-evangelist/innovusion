@@ -1,0 +1,24 @@
+generated: '2026-08-23'
+method: probed
+source: live response headers from https://seyond.com/wp-json/ and https://api.seyond.com/health
+limit_count: 0
+note: >-
+  Seyond documents no rate limits anywhere on seyond.com and ships no developer terms that state one.
+  Response headers were read from live unauthenticated calls to both hosts: no X-RateLimit-*, no
+  RateLimit-* (RFC 9331 draft), and no Retry-After were present on any response. seyond.com sits behind
+  Cloudflare, so an undocumented edge limit almost certainly exists, but it is not signalled in a way an
+  agent can read and no number is asserted here. An honest zero — checked, nothing published.
+limits: []
+headers_observed:
+  host_seyond_com:
+    server: cloudflare
+    x-robots-tag: noindex
+    x-content-type-options: nosniff
+    access-control-expose-headers: X-WP-Total, X-WP-TotalPages, Link
+    rate_limit_headers: none
+  host_api_seyond_com:
+    server: nginx/1.25.3
+    access-control-allow-credentials: 'true'
+    access-control-allow-methods: GET, POST, PATCH, PUT, DELETE, OPTIONS
+    rate_limit_headers: none
+exhaustion_status: unknown

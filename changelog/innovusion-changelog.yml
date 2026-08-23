@@ -1,0 +1,94 @@
+generated: '2026-08-23'
+method: searched
+source: https://github.com/Seyond-Inc/inno-lidar-sdk/releases
+note: >-
+  Seyond publishes no product changelog or release-notes page on seyond.com. The only dated, public
+  change record is the GitHub Releases stream on the two first-party repositories, each release carrying
+  a written note. Recorded here verbatim-in-substance from the GitHub Releases API.
+scheme: semver-like
+versioning_note: >-
+  The SDK uses a three-part major.minor.patch tag (3.103.13), with an in-tree SDK_VERSION file that
+  appends a build timestamp (3.103.4.20250910092521). Release tag naming is inconsistent — the newest is
+  prefixed "release-" (release-3.103.13) while earlier ones are bare (3.103.10). The ROS driver uses a
+  separate, conventional v-prefixed semver line (v1.0.3) and pins the SDK as a submodule.
+streams:
+- name: inno-lidar-sdk
+  url: https://github.com/Seyond-Inc/inno-lidar-sdk/releases
+  current_version: release-3.103.13
+  current_date: '2026-07-24'
+  entries:
+  - version: release-3.103.13
+    date: '2026-07-24'
+    breaking: false
+    highlights:
+    - Fix memory corruption
+    - Add UDP receive buffer
+    - Add support for HD1-W
+  - version: 3.103.10
+    date: '2026-02-24'
+    breaking: false
+    highlights:
+    - Add support for HD IMU
+    - Add HD fault table
+    - Add E2X fault table
+  - version: 3.103.4
+    date: '2025-09-30'
+    breaking: false
+    highlights:
+    - Add support for Robin-E2
+    - Add support for Robin-W VAVE
+    - Optimize demo code
+  - version: 3.103.1
+    date: '2025-08-13'
+    breaking: false
+    highlights:
+    - Add support for HB (Hummingbird) LiDAR
+    - Add support for Robin-E Lite high-resolution mode
+  - version: 3.102.13
+    date: '2025-05-06'
+    breaking: false
+    highlights:
+    - Optimize inno_pc recording performance
+    - Remove vertical FOV limitation for Robin LiDAR
+  - version: 3.102.10
+    date: '2025-02-19'
+    breaking: false
+    highlights:
+    - First public client release; tarball built on Ubuntu 18.04 with libraries and executables
+- name: seyond_ros_driver
+  url: https://github.com/Seyond-Inc/seyond_ros_driver/releases
+  current_version: v1.0.3
+  current_date: '2026-03-09'
+  entries:
+  - version: v1.0.3
+    date: '2026-03-09'
+    breaking: false
+    additions:
+    - Support Falcon ring_id calculation
+    - Support IMU message publishing
+    changes:
+    - Use first packet timestamp as the frame timestamp
+  - version: v1.0.2
+    date: '2025-08-13'
+    breaking: false
+    changes:
+    - Update the seyond_sdk submodule to v3.103.1
+    - Delete unused cmake config
+    - Add submodule instructions to README.md
+  - version: v1.0.1
+    date: '2025-03-31'
+    breaking: true
+    additions:
+    - Support ROS 2 Iron
+    changes:
+    - Change the data type of `intensity` from uint16_t to float
+    - Update package.xml and the build script
+    note: >-
+      The intensity field type change (uint16_t to float) is a wire/message-shape change for any consumer
+      of the published point cloud, recorded here as breaking on that basis. Seyond does not label it a
+      breaking change and publishes no deprecation or migration guidance for it.
+  - version: v1.0.0
+    date: '2025-02-19'
+    breaking: false
+    additions:
+    - Initial Seyond LiDAR ROS driver, supporting Falcon-K1, Falcon-K2, Robin-W and Robin-E1X

@@ -1,0 +1,120 @@
+generated: '2026-08-23'
+method: probed
+source: live probes of seyond.com; https://seyond.com/products/simpl-solution/
+note: >-
+  Assertions below are made only where a document Seyond actually serves, or a claim Seyond actually
+  publishes, supports them. There is no OpenAPI, so no spec-derived conformance is claimed.
+standards:
+- id: oauth2
+  conforms: true
+  evidence:
+    url: https://seyond.com/.well-known/oauth-authorization-server
+    status: 200
+    detail: >-
+      RFC 6749 authorization-code grant with refresh_token, advertised by RFC 8414 authorization-server
+      metadata served at the canonical well-known path.
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  evidence:
+    url: https://seyond.com/.well-known/oauth-authorization-server
+    status: 200
+    detail: Document parses and carries issuer, authorization_endpoint, token_endpoint, revocation_endpoint.
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata
+  conforms: true
+  evidence:
+    url: https://seyond.com/.well-known/oauth-protected-resource
+    status: 200
+    detail: >-
+      Names the protected resource https://seyond.com/wp-json/mcp/mcp-oauth-server, its authorization
+      server and its bearer methods; the 401 from that endpoint carries a matching WWW-Authenticate
+      resource_metadata parameter.
+- id: rfc7636
+  name: PKCE
+  conforms: true
+  evidence:
+    url: https://seyond.com/.well-known/oauth-authorization-server
+    status: 200
+    detail: 'code_challenge_methods_supported: ["S256"]; token_endpoint_auth_methods_supported: ["none"] (public clients).'
+- id: mcp
+  name: Model Context Protocol
+  conforms: partial
+  evidence:
+    url: https://seyond.com/wp-json/mcp/mcp-oauth-server
+    status: 401
+    detail: >-
+      A live MCP endpoint with a conformant OAuth discovery chain, but the JSON-RPC surface itself could
+      not be exercised anonymously, so protocol-level conformance (initialize handshake, protocolVersion,
+      tools/list shape) is unverified. Recorded as partial rather than true.
+- id: oidc
+  conforms: false
+  evidence:
+    url: https://seyond.com/.well-known/openid-configuration
+    status: 404
+    detail: No OIDC discovery document on any Seyond host.
+- id: rfc9457
+  name: Problem Details for HTTP APIs
+  conforms: false
+  evidence:
+    url: https://seyond.com/wp-json/mcp/mcp-oauth-server
+    status: 401
+    detail: >-
+      Errors return application/json with the WordPress {code, message, data.status} envelope, never
+      application/problem+json.
+- id: rfc9116
+  name: security.txt
+  conforms: false
+  evidence:
+    url: https://seyond.com/.well-known/security.txt
+    status: 404
+    detail: No security.txt on seyond.com or api.seyond.com.
+- id: idempotency
+  conforms: false
+  evidence:
+    url: https://seyond.com/
+    status: 200
+    detail: No idempotency key, header or documented retry semantics on any surface.
+- id: pagination
+  conforms: partial
+  evidence:
+    url: https://seyond.com/wp-json/
+    status: 200
+    detail: >-
+      WordPress REST page/per_page with X-WP-Total and X-WP-TotalPages. This is the CMS behind the
+      corporate site, not a Seyond product API — recorded for completeness, not as a product capability.
+domain_standards:
+- id: nema-ts-2-2021
+  name: NEMA TS 2-2021
+  sector: intelligent-transportation
+  conforms: claimed
+  contract_declared: false
+  evidence:
+    url: https://seyond.com/products/simpl-solution/
+    status: 200
+    quote: "Seyond's FALCON LiDAR has passed all NEMA TS 2-2021 tests."
+    detail: >-
+      A public product claim on Seyond's own SIMPL page. NEMA TS 2 is an environmental/electrical
+      standard for traffic-control equipment, not a message or interface standard, and nothing in any
+      Seyond-published contract declares it — there is no contract. Recorded as `claimed` and
+      contract_declared: false so it is never mistaken for a machine-verifiable domain-standard signature.
+- id: its-message-standards
+  name: NTCIP / TMDD / SAE J2735
+  sector: intelligent-transportation
+  conforms: unknown
+  contract_declared: false
+  evidence:
+    url: https://seyond.com/its/
+    status: 200
+    detail: >-
+      SIMPL is marketed to cities, DOTs and tolling agencies for "real-time traffic data collection,
+      decision making and integration", which is exactly the market where NTCIP, TMDD and SAE J2735
+      would apply. Seyond makes no public conformance claim to any of them and publishes no interface
+      contract, so nothing is asserted. This is the single largest publishable gap for this provider.
+certifications:
+  published: false
+  trust_center: null
+  note: >-
+    probe-security-programs.py returned vdp=none trust=none. No SOC 2, ISO 27001, PCI, HIPAA or FedRAMP
+    claim, and no trust center, was found on seyond.com. No `Compliance` or `TrustCenter` pointer is
+    emitted, because there is nothing published to point at.

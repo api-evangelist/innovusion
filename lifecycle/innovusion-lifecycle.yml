@@ -1,0 +1,62 @@
+generated: '2026-08-23'
+method: searched
+source: https://github.com/Seyond-Inc/inno-lidar-sdk/releases
+note: >-
+  Searched seyond.com and the two first-party GitHub repositories for a versioning policy, a deprecation
+  policy, Sunset/Deprecation headers (RFC 8594), an SLA and a status page. Only a release stream exists.
+  Every "false"/"null" below is a checked absence, not an unchecked field.
+versioning:
+  scheme: semver-like
+  policy_published: false
+  policy_url: null
+  current:
+  - artifact: inno-lidar-sdk
+    version: release-3.103.13
+    date: '2026-07-24'
+  - artifact: seyond_ros_driver
+    version: v1.0.3
+    date: '2026-03-09'
+  note: >-
+    Versioning is per-artifact on GitHub tags. There is no API version at all — no versioned base path,
+    no version header, no /v1 prefix — because there is no published web API to version.
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  note: >-
+    No deprecation policy is published. The one observed breaking change — the ROS driver's `intensity`
+    field changing from uint16_t to float in v1.0.1 (2025-03-31) — shipped in a patch-level tag with no
+    deprecation notice, no migration guide and no advance warning. See changelog/innovusion-changelog.yml.
+sla:
+  published: false
+  url: null
+  note: >-
+    seyond.com advertises "24/7 Support" with a phone number, (650) 963-9573, and info@seyond.com, but
+    publishes no service-level agreement, uptime target or response-time commitment.
+status_page:
+  present: false
+  url: null
+  note: >-
+    status.seyond.com does not resolve (no DNS). No status.io/Statuspage/Instatus page was found for
+    Seyond or Innovusion. No StatusPage pointer is emitted in apis.yml, because there is nothing to point at.
+support:
+  channels:
+  - type: phone
+    value: '+1-650-963-9573'
+  - type: email
+    value: info@seyond.com
+  - type: form
+    value: https://seyond.com/contact/
+  - type: issues
+    value: https://github.com/Seyond-Inc/inno-lidar-sdk/issues
+company_lifecycle:
+  former_name: Innovusion
+  current_name: Seyond
+  note: >-
+    The company rebranded from Innovusion to Seyond. innovusion.com no longer resolves (connection times
+    out); seyond.com is the live corporate host. The internal "inno"/"ivusw" prefix survives in the SDK
+    repository name (inno-lidar-sdk), the C API symbols (inno_lidar_*), the Wireshark plugin
+    (innovusion.lua) and the Bitbucket workspace (bitbucket.org/ivusw), which is the strongest available
+    evidence that Seyond and Innovusion are one company and not two.

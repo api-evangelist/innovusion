@@ -1,0 +1,40 @@
+generated: '2026-08-23'
+method: searched
+source: https://github.com/Seyond-Inc/inno-lidar-sdk
+name: inno-lidar-sdk tools
+note: >-
+  Seyond publishes no packaged, installable CLI (no Homebrew formula, no npm/pip entry point). What it
+  does ship is a set of first-party command-line utilities built from source alongside the client SDK,
+  under apps/tools/ and apps/example/ in Seyond-Inc/inno-lidar-sdk. They are the only supported
+  command-line surface for the sensors and are documented per-tool in the repository's docs/ directory.
+install:
+- method: source
+  steps:
+  - git clone https://github.com/Seyond-Inc/inno-lidar-sdk
+  - cd build && ./build_unix.sh
+  platforms: [linux, macos, windows, qnx]
+commands:
+- name: innovusion_lidar_util
+  path: apps/tools/lidar_util/innovusion_lidar_util
+  purpose: LiDAR configuration tool — read and write sensor configuration sections/keys and registers.
+  docs: null
+- name: get_pcd
+  path: apps/tools/get_pcd/
+  purpose: Capture point-cloud data from a live sensor or a recorded file and convert between file formats.
+  docs: https://github.com/Seyond-Inc/inno-lidar-sdk/blob/main/docs/get_pcd.md
+- name: check_net
+  path: apps/tools/check_net/check_net.sh
+  purpose: Network diagnostic for the host-to-sensor link (MTU, multicast, packet loss).
+  docs: https://github.com/Seyond-Inc/inno-lidar-sdk/blob/main/docs/check_net.md
+- name: demo
+  path: apps/example/demo.cpp
+  purpose: Sample binary that connects to a live sensor and receives XYZ frames via callback.
+  docs: https://github.com/Seyond-Inc/inno-lidar-sdk/blob/main/docs/demo.md
+- name: sphere2xyz
+  path: apps/example/sphere2xyz.cpp
+  purpose: Sample binary that receives sphere packets and performs frame assembly and coordinate conversion in the application layer.
+  docs: https://github.com/Seyond-Inc/inno-lidar-sdk/blob/main/docs/demo.md
+- name: innovusion.lua
+  path: apps/tools/innovusion_wireshark_plugin/innovusion.lua
+  purpose: Wireshark dissector for the Seyond/Innovusion sensor wire protocol.
+  docs: https://github.com/Seyond-Inc/inno-lidar-sdk/blob/main/docs/innovusion_lua.md

@@ -1,0 +1,56 @@
+generated: '2026-08-23'
+method: probed
+source: live responses observed from https://seyond.com/wp-json/ and https://api.seyond.com/
+format: vendor-json
+rfc9457: false
+note: >-
+  There is no OpenAPI to derive 4xx/5xx responses from, and Seyond publishes no error reference. Every
+  entry below is an error envelope this pipeline actually received from a live Seyond host on
+  2026-08-23. The envelope is the WordPress REST shape ({code, message, data:{status}}), not RFC 9457
+  application/problem+json — no Content-Type of application/problem+json was observed on any surface.
+envelope:
+  content_type: application/json; charset=UTF-8
+  fields:
+    code: machine-readable string identifier
+    message: human-readable sentence
+    data.status: the HTTP status repeated in the body
+  example: '{"code":"mcp_unauthorized","message":"MCP authentication required.","data":{"status":401}}'
+problem_types:
+- code: mcp_unauthorized
+  status: 401
+  title: MCP authentication required.
+  surface: https://seyond.com/wp-json/mcp/mcp-oauth-server
+  remediation: >-
+    Complete the OAuth authorization-code + PKCE (S256) flow against https://seyond.com/oauth/authorize
+    and https://seyond.com/oauth/token for the `mcp` scope, then retry with a bearer token in the
+    Authorization header. The response carries a WWW-Authenticate header pointing at
+    /.well-known/oauth-protected-resource (RFC 9728).
+  observed: '2026-08-23'
+- code: rest_forbidden
+  status: 401
+  title: Sorry, you are not allowed to do that.
+  surface: https://seyond.com/wp-json/mcp/mcp-adapter-default-server
+  remediation: >-
+    This endpoint expects a logged-in WordPress session and an X-WP-Nonce header rather than a bearer
+    token; there is no anonymous path to it. Also returned by
+    /wp-json/wp-abilities/v1/abilities.
+  observed: '2026-08-23'
+- code: rest_no_route
+  status: 404
+  title: No route was found matching the URL and request method.
+  surface: https://seyond.com/wp-json/*
+  remediation: >-
+    The requested REST route does not exist on this host. Enumerate the live routes from
+    https://seyond.com/wp-json/ (namespace index) or /wp-json/?context=help before calling.
+  observed: '2026-08-23'
+- code: null
+  status: 404
+  title: 404 Not Found (nginx)
+  surface: https://api.seyond.com/*
+  content_type: text/html
+  remediation: >-
+    The SIMPL API host is live behind nginx 1.25.3 on an AWS ALB but publishes no anonymous routes. Every
+    discovery path probed (/openapi.json, /swagger.json, /api-docs, /v3/api-docs, /graphql, /docs,
+    /.well-known/*) returns this HTML 404. Only /health responds, with the plain-text body "ok".
+    Access presumably requires a SIMPL customer deployment; Seyond documents no way to obtain it.
+  observed: '2026-08-23'

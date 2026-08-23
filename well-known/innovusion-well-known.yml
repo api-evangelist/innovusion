@@ -1,0 +1,57 @@
+generated: '2026-08-23'
+method: probed
+source: live GET probes of /.well-known/* on every host named in apis.yml
+note: >-
+  Two real documents were served, both by the MCP OAuth layer running on the corporate WordPress host
+  seyond.com — RFC 8414 authorization-server metadata and RFC 9728 protected-resource metadata. Neither
+  is an SPA shell; both parse as JSON and name real endpoints. Every other path on seyond.com returns
+  HTTP 404 with the WordPress 404 page (~296KB of HTML), which is a genuine 404, not a soft-200 catch-all.
+  The API host api.seyond.com returns an nginx 404 (555 bytes) on every /.well-known/* path; its only
+  responding path is /health, which returns "ok".
+hit_count: 2
+hosts:
+- host: https://seyond.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: innovusion-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: innovusion-oauth-protected-resource.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.seyond.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+x-evidence:
+  fetched: '2026-08-23'
+  soft_404_control:
+    url: https://seyond.com/.well-known/definitely-not-a-real-path-ae
+    note: >-
+      seyond.com answers unknown paths with HTTP 404 and the WordPress 404 template; api.seyond.com
+      answers with nginx 404 (555 bytes). Neither host is a 200 catch-all.

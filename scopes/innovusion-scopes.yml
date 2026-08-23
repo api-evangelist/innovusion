@@ -1,0 +1,18 @@
+generated: '2026-08-23'
+method: probed
+source: https://seyond.com/.well-known/oauth-authorization-server
+docs: null
+note: >-
+  derive-oauth-scopes.py found no OpenAPI oauth2 securityScheme for this provider (there is no OpenAPI at
+  all). The scope list below is not derived — it is read verbatim from the RFC 8414 authorization-server
+  metadata and the RFC 9728 protected-resource metadata that seyond.com serves anonymously. Seyond
+  publishes no scopes or permissions reference page; a docs URL is recorded as null rather than guessed.
+authorization_server: https://seyond.com
+scope_count: 1
+scopes:
+- name: mcp
+  description: >-
+    The only scope advertised by seyond.com's authorization server, and the only scope named in the
+    protected-resource metadata for https://seyond.com/wp-json/mcp/mcp-oauth-server. No finer-grained
+    scopes are published; per-tool authorization, if any, is not anonymously discoverable.
+  source: both scopes_supported arrays (authorization-server and protected-resource metadata)

@@ -1,0 +1,81 @@
+generated: '2026-08-23'
+method: probed
+source: https://seyond.com/.well-known/oauth-protected-resource
+name: Seyond MCP Server
+status: live
+deployment:
+  mode: remote
+  endpoint: https://seyond.com/wp-json/mcp/mcp-oauth-server
+  auth: oauth
+  verified: probed
+note: >-
+  Seyond serves a live, OAuth-gated Model Context Protocol endpoint from its own corporate host. It is
+  provided by the WordPress MCP adapter running on seyond.com (the `mcp` and `wp-abilities/v1` namespaces
+  are both registered in the site's WP REST index), so the abilities it exposes are site/content
+  abilities — not LiDAR sensor control and not SIMPL traffic data. It is recorded here because it is a
+  real agent surface an MCP client can reach at Seyond's own domain, not because Seyond markets an
+  agent product. Seyond does not document this endpoint anywhere on seyond.com.
+endpoints:
+- url: https://seyond.com/wp-json/mcp/mcp-oauth-server
+  methods: [POST, GET, DELETE]
+  transport: streamable-http
+  auth: oauth
+  probe:
+    method: POST
+    body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    status: 401
+    body_returned: '{"code":"mcp_unauthorized","message":"MCP authentication required.","data":{"status":401}}'
+    www_authenticate: >-
+      Bearer realm="https://seyond.com",
+      resource_metadata="https://seyond.com/.well-known/oauth-protected-resource"
+- url: https://seyond.com/wp-json/mcp/mcp-adapter-default-server
+  methods: [POST, GET, DELETE]
+  transport: streamable-http
+  auth: wordpress-session
+  probe:
+    method: POST
+    body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    status: 401
+    body_returned: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+authorization:
+  discovery:
+  - path: /.well-known/oauth-protected-resource
+    rfc: RFC 9728
+    status: 200
+    file: ../well-known/innovusion-oauth-protected-resource.json
+  - path: /.well-known/oauth-authorization-server
+    rfc: RFC 8414
+    status: 200
+    file: ../well-known/innovusion-oauth-authorization-server.json
+  issuer: https://seyond.com
+  authorization_endpoint: https://seyond.com/oauth/authorize
+  token_endpoint: https://seyond.com/oauth/token
+  revocation_endpoint: https://seyond.com/oauth/revoke
+  grant_types: [authorization_code, refresh_token]
+  pkce: S256
+  dynamic_client_registration: client_id_metadata_document
+  scopes: [mcp]
+tools:
+  status: gated
+  count: null
+  note: >-
+    tools/list and initialize both return HTTP 401. The tool set and per-tool inputSchema require an
+    authenticated OAuth introspection, which this pipeline does not perform. No tool list is asserted
+    here. /wp-json/wp-abilities/v1/abilities — the REST projection of the same ability registry — also
+    returns 401 (rest_forbidden), so the ability names are not anonymously readable either.
+x-evidence:
+  fetched: '2026-08-23'
+  probes:
+  - url: https://seyond.com/wp-json/mcp
+    status: 200
+    note: namespace index; lists mcp-oauth-server and mcp-adapter-default-server
+  - url: https://seyond.com/wp-json/mcp/mcp-oauth-server
+    status: 401
+  - url: https://seyond.com/wp-json/mcp/mcp-adapter-default-server
+    status: 401
+  - url: https://seyond.com/wp-json/wp-abilities/v1/abilities
+    status: 401
+  - url: https://seyond.com/.well-known/oauth-protected-resource
+    status: 200
+  - url: https://seyond.com/.well-known/oauth-authorization-server
+    status: 200

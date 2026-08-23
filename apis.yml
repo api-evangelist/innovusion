@@ -1,18 +1,50 @@
 aid: innovusion
 name: Seyond
-description: 'Seyond is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Seyond (formerly Innovusion) is a Sunnyvale, California LiDAR maker with R&D and business
+  operations in Germany and China. It designs and mass-produces image-grade LiDAR sensors — Falcon K,
+  Robin W, Robin E1X and Hummingbird D1 — plus perception software and SIMPL, the Seyond ITS Management
+  Platform used by cities, DOTs and tolling agencies for intersection and highway traffic detection. Its
+  public developer surface is not a web API: it is a first-party C/C++ client SDK (inno-lidar-sdk) and a
+  ROS/ROS2 driver published on GitHub that speak a proprietary TCP/UDP command-and-pointcloud protocol
+  directly to the sensor. No OpenAPI, GraphQL, gRPC or SOAP contract is published; api.seyond.com is live
+  but answers 404 on every discovery path. The corporate site does serve a live, OAuth-gated MCP server.'
 url: https://raw.githubusercontent.com/api-evangelist/innovusion/refs/heads/main/apis.yml
+image: https://seyond.com/wp-content/uploads/2024/11/cropped-seyond_favicon-192x192.png
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-23'
 modified: '2026-08-23'
 tags:
 - Company
-apis: []
+- LiDAR
+- Sensors
+- Autonomous Driving
+- Intelligent Transportation
+- Robotics
+- Perception
+- Smart Cities
+- Automotive
+- Hardware
+apis:
+- name: Seyond MCP Server
+  description: 'A live, OAuth-gated Model Context Protocol endpoint served from Seyond''s own corporate
+    host at https://seyond.com/wp-json/mcp/mcp-oauth-server. It is provided by the WordPress MCP adapter
+    running on seyond.com and exposes site/content abilities rather than LiDAR or SIMPL functionality.
+    Discovery metadata is anonymous (RFC 8414 authorization-server metadata and RFC 9728 protected-resource
+    metadata both return 200); tools/list and initialize both return HTTP 401 mcp_unauthorized, so the
+    tool set and its input schemas require an authenticated introspection we did not perform.'
+  humanURL: https://seyond.com/
+  baseURL: https://seyond.com/wp-json/mcp/mcp-oauth-server
+  tags:
+  - MCP
+  - Agents
+  - OAuth
+  properties:
+  - type: MCPServer
+    url: mcp/innovusion-mcp.yml
+  - type: OAuthScopes
+    url: scopes/innovusion-scopes.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +52,85 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/innovusion_stock/
+  url: https://seyond.com/
+- type: Documentation
+  url: https://github.com/Seyond-Inc/inno-lidar-sdk/blob/main/docs/HOW_TO_USE_CLIENT_SDK.md
+- type: GettingStarted
+  url: https://github.com/Seyond-Inc/inno-lidar-sdk#quick-start
+- type: GitHubOrganization
+  url: https://github.com/Seyond-Inc
+- type: Support
+  url: https://seyond.com/contact/
+- type: Blog
+  url: https://seyond.com/news/
+- type: BlogRSS
+  url: https://seyond.com/feed/
+- type: TermsOfService
+  url: https://seyond.com/terms-of-use/
+- type: PrivacyPolicy
+  url: https://seyond.com/privacy-policy/
+- type: SourceCode
+  url: https://github.com/Seyond-Inc
+- type: OpenSource
+  url: https://seyond.com/open-source-software/
+- type: Downloads
+  url: https://seyond.com/downloads/
+- type: Products
+  url: https://seyond.com/products/
+- type: Packages
+  url: packages/innovusion-packages.yml
+- type: SDKs
+  url: packages/innovusion-packages.yml
+- type: CLI
+  url: cli/innovusion-cli.yml
+- type: ChangeLog
+  url: changelog/innovusion-changelog.yml
+- type: MCPServer
+  url: mcp/innovusion-mcp.yml
+- type: WellKnown
+  url: well-known/innovusion-well-known.yml
+- type: Authentication
+  url: authentication/innovusion-authentication.yml
+- type: OAuthScopes
+  url: scopes/innovusion-scopes.yml
+- type: Conventions
+  url: conventions/innovusion-conventions.yml
+- type: ErrorCatalog
+  url: errors/innovusion-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/innovusion-lifecycle.yml
+- type: Conformance
+  url: conformance/innovusion-conformance.yml
+- type: DomainSecurity
+  url: security/innovusion-domain-security.yml
+- type: RateLimits
+  url: rate-limits/innovusion-rate-limits.yml
+- type: Plans
+  url: plans/innovusion-plans-pricing.yml
+- type: LLMsTxt
+  url: llms/innovusion-llms.txt
+x-enrichment:
+  date: '2026-08-23'
+  status: enriched
+  artifacts_added: 17
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: no-machine-readable-spec
+  detail: >-
+    Seyond publishes no web API contract of any kind — its developer surface is a C/C++ client SDK that
+    speaks a proprietary TCP/UDP protocol directly to the sensor — but the pass completed and found real
+    first-party artifacts: an actively released SDK and ROS driver on github.com/Seyond-Inc, and a live
+    OAuth-gated MCP endpoint with RFC 8414 and RFC 9728 discovery documents on seyond.com.
+  evidence:
+  - url: https://api.seyond.com/openapi.json
+    status: 404
+  - url: https://api.seyond.com/health
+    status: 200
+  - url: https://seyond.com/.well-known/oauth-protected-resource
+    status: 200
+  - url: https://seyond.com/wp-json/mcp/mcp-oauth-server
+    status: 401
+  - url: https://github.com/Seyond-Inc/inno-lidar-sdk
+    status: 200
+  checked: '2026-08-23'

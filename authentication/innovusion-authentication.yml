@@ -1,0 +1,56 @@
+generated: '2026-08-23'
+method: probed
+source: https://seyond.com/.well-known/oauth-authorization-server
+note: >-
+  There is no OpenAPI to derive securitySchemes from — derive-authentication.py found no spec for this
+  provider. This profile is built entirely from live probes of the surfaces Seyond actually serves.
+  Seyond publishes no API key programme, no developer signup and no documented authentication page.
+schemes:
+- id: mcp-oauth2
+  type: oauth2
+  surface: https://seyond.com/wp-json/mcp/mcp-oauth-server
+  flows:
+    authorizationCode:
+      authorizationUrl: https://seyond.com/oauth/authorize
+      tokenUrl: https://seyond.com/oauth/token
+      refreshUrl: null
+      revocationUrl: https://seyond.com/oauth/revoke
+      scopes:
+        mcp: The single scope advertised by the authorization server for MCP access.
+  pkce:
+    required_methods: [S256]
+  token_endpoint_auth_methods: [none]
+  client_registration: client_id_metadata_document
+  bearer_methods: [header]
+  discovery:
+  - https://seyond.com/.well-known/oauth-authorization-server
+  - https://seyond.com/.well-known/oauth-protected-resource
+  evidence:
+    challenge_header: >-
+      WWW-Authenticate: Bearer realm="https://seyond.com",
+      resource_metadata="https://seyond.com/.well-known/oauth-protected-resource"
+    challenge_status: 401
+- id: wordpress-session
+  type: cookie
+  surface: https://seyond.com/wp-json/mcp/mcp-adapter-default-server
+  note: >-
+    The second registered MCP server rejects anonymous calls with the WordPress REST rest_forbidden
+    envelope rather than an OAuth challenge, so it is gated on a logged-in WordPress session/nonce
+    (X-WP-Nonce is in the Access-Control-Allow-Headers list) rather than on a bearer token.
+- id: device-local-none
+  type: none
+  surface: LiDAR sensor command channel (inno-lidar-sdk)
+  note: >-
+    The client SDK connects to a sensor on the local network by IP address and port
+    (inno_lidar_open_live(name, lidar_ip, port, protocol, udp_port)). The SDK exposes no credential
+    parameter and the published documentation describes none, so the sensor command and point-cloud
+    channels are unauthenticated network services and their security depends on network segmentation.
+    Recorded as observed from the published SDK source and docs, not as a recommendation.
+  evidence:
+  - https://github.com/Seyond-Inc/inno-lidar-sdk/blob/main/docs/HOW_TO_USE_CLIENT_SDK.md
+  - https://github.com/Seyond-Inc/inno-lidar-sdk/blob/main/src/sdk_common/lidar_communication.h
+unauthenticated_surfaces:
+- url: https://api.seyond.com/health
+  status: 200
+  body: ok
+  note: The only path on the SIMPL API host that answers; every other probed path returns nginx 404.

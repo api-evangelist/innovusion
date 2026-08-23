@@ -1,0 +1,62 @@
+generated: '2026-08-23'
+method: probed
+source: live probes of seyond.com and api.seyond.com; https://github.com/Seyond-Inc/inno-lidar-sdk
+note: >-
+  Seyond publishes no API design guide, no conventions page and no OpenAPI. Everything below is either
+  observed on a live response or read from the published SDK source. Fields that could not be
+  established are recorded as unknown rather than filled in.
+auth_style:
+  public_web_api: none
+  mcp: OAuth 2.0 authorization code + PKCE (S256), bearer token in the Authorization header
+  device_sdk: none — the sensor command channel takes no credential
+  reference: authentication/innovusion-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  note: >-
+    No Idempotency-Key header, no request-id replay semantics and no documentation of retry safety on any
+    Seyond surface. No `Idempotency` pointer is emitted in apis.yml, because emitting one would assert
+    support that does not exist.
+pagination:
+  style: wordpress-rest
+  params: [page, per_page]
+  response_fields: [X-WP-Total, X-WP-TotalPages, Link]
+  note: >-
+    Observed only on the WordPress REST surface of the corporate site (and exposed to browsers via
+    Access-Control-Expose-Headers). This is the WordPress default, not a Seyond design decision, and it
+    does not describe any Seyond product API.
+field_expansion:
+  supported: unknown
+sparse_fields:
+  supported: unknown
+metadata:
+  supported: unknown
+request_id_tracing:
+  header: null
+  note: No request-correlation header was observed on any response from either host.
+versioning:
+  style: none-for-api
+  reference: lifecycle/innovusion-lifecycle.yml
+error_envelope:
+  shape: '{code, message, data:{status}}'
+  rfc9457: false
+  reference: errors/innovusion-problem-types.yml
+rate_limit_signalling:
+  headers: none
+  reference: rate-limits/innovusion-rate-limits.yml
+reversibility:
+  grade: na
+  applicable: false
+  note: >-
+    Seyond publishes no write-capable web API, so there is no action for an agent to take back. The only
+    anonymously reachable surfaces are a health check (GET /health, read-only) and two MCP endpoints that
+    reject every anonymous call with 401 — their tool set is not readable, so no write surface can be
+    asserted and none is invented here. The device SDK does expose real writes to the sensor
+    (set_config_section_key_value, reg_write, firmware/file upload) but they are local network calls into
+    hardware, not API operations, and the published documentation states no reversal operation and no
+    window for any of them. reversibility, dry_run_mode and idempotency are all `na` for this provider on
+    the same basis: an honest not-applicable, not a zero.
+  dry_run_mode: na
+  write_surfaces: []

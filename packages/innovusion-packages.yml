@@ -1,0 +1,68 @@
+generated: '2026-08-23'
+method: searched
+source: https://github.com/Seyond-Inc
+note: >-
+  Seyond ships no client library on npm, PyPI, crates.io, RubyGems, Maven Central, NuGet or pkg.go.dev —
+  all probed 404 for both "seyond" and "innovusion". Its first-party developer distribution is source on
+  GitHub with tagged releases, plus gated binary downloads on seyond.com/downloads/ that require an email
+  address before the link is sent. The four bitbucket.org/ivusw repositories linked from
+  seyond.com/open-source-software/ are GPL/licence-compliance mirrors of Linux, U-Boot, NTP and PTP for
+  the Falcon sensor's embedded OS — they are not client libraries and are not listed as SDKs here.
+packages:
+- language: c++
+  registry: github
+  name: Seyond-Inc/inno-lidar-sdk
+  url: https://github.com/Seyond-Inc/inno-lidar-sdk
+  install: git clone https://github.com/Seyond-Inc/inno-lidar-sdk && cd build && ./build_unix.sh
+  official: true
+  version: release-3.103.13
+  published: '2026-07-24'
+  note: >-
+    The Seyond LiDAR Client SDK. Speaks the sensor's proprietary TCP/UDP command-and-pointcloud protocol
+    directly; there is no HTTP/REST contract behind it. Supports Falcon-K1/K2/K24, Robin-W, Robin-E1X,
+    Robin-E2 and HB-D1 on Linux, macOS, Windows and QNX. Version and date read from the GitHub Releases
+    API (github.com/Seyond-Inc/inno-lidar-sdk/releases); there is no package-registry metadata endpoint
+    for this distribution because it is source-only.
+- language: c++
+  registry: github
+  name: Seyond-Inc/seyond_ros_driver
+  url: https://github.com/Seyond-Inc/seyond_ros_driver
+  install: git clone https://github.com/Seyond-Inc/seyond_ros_driver
+  official: true
+  version: v1.0.3
+  published: '2026-03-09'
+  note: >-
+    First-party ROS/ROS2 driver built on inno-lidar-sdk. Not published to the ROS index —
+    index.ros.org/p/seyond_ros_driver/ returns 404 — so it is installed from source, and there is no
+    rosdistro metadata endpoint to read a version from. Version and date read from GitHub Releases.
+    A downstream fork exists at tier4/seyond_ros_driver (Autoware), which is third-party.
+- language: binary
+  registry: gated-download
+  name: MetaView
+  url: https://seyond.com/downloads/
+  install: "Register with an email address on seyond.com/downloads/; a download link is emailed."
+  official: true
+  version: 1.6.2
+  published: null
+  note: >-
+    Seyond's desktop point-cloud viewer/configuration application, shipped for Windows, macOS and Linux.
+    Version 1.6.2 is read from the download table label on seyond.com/downloads/ ("MetaView Windows
+    v1.6.2"). published is null: the page states no release date and the artefact is behind an email
+    gate, so no dated metadata is anonymously readable. The same page carries a "Seyond ROS Driver & SDK"
+    download behind the same gate.
+registries_probed:
+- registry: npm
+  queries: [seyond, innovusion, inno-lidar-sdk, seyond-lidar]
+  result: 404
+- registry: pypi
+  queries: [seyond, innovusion, inno-lidar, seyond-lidar]
+  result: 404
+- registry: crates.io
+  queries: [seyond, innovusion]
+  result: 404
+- registry: rubygems
+  queries: [seyond, innovusion]
+  result: 404
+- registry: index.ros.org
+  queries: [seyond_ros_driver]
+  result: 404
