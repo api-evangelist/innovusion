@@ -9,6 +9,17 @@ description: 'Seyond (formerly Innovusion) is a Sunnyvale, California LiDAR make
   directly to the sensor. No OpenAPI, GraphQL, gRPC or SOAP contract is published; api.seyond.com is live
   but answers 404 on every discovery path. The corporate site does serve a live, OAuth-gated MCP server.'
 url: https://raw.githubusercontent.com/api-evangelist/innovusion/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://seyond.com/wp-content/uploads/2024/11/cropped-seyond_favicon-192x192.png
 x-type: company
 x-source: harvest:secondary-market
