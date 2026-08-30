@@ -50,6 +50,10 @@ apis:
   tags:
   - MCP
   - Agents
+  - Authentication
+  tags_raw:
+  - MCP
+  - Agents
   - OAuth
   properties:
   - type: MCPServer
