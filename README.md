@@ -64,5 +64,117 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Seyond is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/innovusion_stock/
+Seyond (formerly Innovusion) is a Sunnyvale, California LiDAR maker with R&D and business operations in Germany and China. It designs and mass-produces image-grade LiDAR sensors — Falcon K, Robin W, Robin E1X and Hummingbird D1 — plus perception software and SIMPL, the Seyond ITS Management Platform used by cities, DOTs and tolling agencies for intersection and highway traffic detection. Its public developer surface is not a web API: it is a first-party C/C++ client SDK (inno-lidar-sdk) and a ROS/ROS2 driver published on GitHub that speak a proprietary TCP/UDP command-and-pointcloud protocol directly to the sensor. No OpenAPI, GraphQL, gRPC or SOAP contract is published; api.seyond.com is live but answers 404 on every discovery path. The corporate site does serve a live, OAuth-gated MCP server.
+
+**Areas:** Company · LiDAR · Sensors · Autonomous Driving · Intelligent Transportation · Robotics · Perception · Smart Cities · Automotive · Hardware
+
+## Seyond on APIs.io
+
+Everything profiled for Seyond is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/innovusion/](https://apis.io/providers/innovusion/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Seyond MCP Server](https://apis.io/apis/innovusion/seyond-mcp-server/) — A live, OAuth-gated Model Context Protocol endpoint served from Seyond's own corporate host at https://seyond.com/wp-json/mcp/mcp-oauth-server. It is…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Seyond MCP Server](https://apis.io/servers/innovusion/seyond-mcp-server/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Innovusion Authentication](https://apis.io/security/innovusion/innovusion-authentication/)
+- [Innovusion Domain Security](https://apis.io/security/innovusion/innovusion-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Innovusion Scopes](https://apis.io/scopes/innovusion/innovusion-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Innovusion Plans Pricing](https://apis.io/plans/innovusion/innovusion-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Innovusion Rate Limits](https://apis.io/rate-limits/innovusion/innovusion-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://seyond.com/)
+- [Documentation](https://github.com/Seyond-Inc/inno-lidar-sdk/blob/main/docs/HOW_TO_USE_CLIENT_SDK.md)
+- [Getting started](https://github.com/Seyond-Inc/inno-lidar-sdk#quick-start)
+- [Support](https://seyond.com/contact/)
+- [Blog](https://seyond.com/news/)
+- [Terms of service](https://seyond.com/terms-of-use/)
+- [Privacy policy](https://seyond.com/privacy-policy/)
+- [GitHub](https://github.com/Seyond-Inc)
+
+## API Evangelist rating
+
+**Kin Score 29.5** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 54.8 |
+| Access clarity | 21.1 |
+
+**Agent readiness 21.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/innovusion/](https://apis.io/providers/innovusion/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Seyond: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/innovusion/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
